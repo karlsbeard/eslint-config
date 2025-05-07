@@ -1,0 +1,95 @@
+{
+  "name": "@karl/eslint-config",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.6.2",
+  "description": "karl's ESLint config",
+  "author": "karl <2557075675@qq.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/karlsbeard/eslint-config/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karlsbeard/eslint-config.git"
+  },
+  "keywords": [
+    "eslint-config"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "gen": "tsx scripts/typegen.ts && tsx scripts/versiongen.ts",
+    "prepublishOnly": "nr build",
+    "start": "tsx src/index.ts",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "prepare": "simple-git-hooks",
+    "release": "release-it"
+  },
+  "peerDependencies": {
+    "@prettier/plugin-xml": "^3.4.1",
+    "eslint": "^9.10.0",
+    "eslint-plugin-format": ">=0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "eslint-plugin-format": {
+      "optional": true
+    },
+    "@prettier/plugin-xml": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@stylistic/eslint-plugin": "catalog:prod",
+    "@typescript-eslint/eslint-plugin": "catalog:prod",
+    "@typescript-eslint/parser": "catalog:prod",
+    "eslint-config-flat-gitignore": "catalog:prod",
+    "eslint-flat-config-utils": "catalog:prod",
+    "eslint-plugin-antfu": "catalog:prod",
+    "eslint-plugin-import-x": "catalog:prod",
+    "eslint-plugin-unused-imports": "catalog:prod",
+    "globals": "catalog:prod",
+    "local-pkg": "catalog:prod"
+  },
+  "devDependencies": {
+    "@antfu/ni": "catalog:cli",
+    "@antfu/utils": "catalog:inlined",
+    "@prettier/plugin-xml": "catalog:peer",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@types/node": "catalog:types",
+    "bumpp": "catalog:cli",
+    "eslint": "catalog:cli",
+    "eslint-plugin-format": "catalog:peer",
+    "eslint-typegen": "catalog:dev",
+    "lint-staged": "catalog:cli",
+    "pnpm-workspace-yaml": "catalog:dev",
+    "release-it": "^18.1.2",
+    "simple-git-hooks": "catalog:cli",
+    "tinyexec": "catalog:utils",
+    "tsx": "catalog:cli",
+    "typescript": "catalog:cli",
+    "unbuild": "catalog:cli",
+    "vite": "catalog:cli",
+    "vitest": "catalog:testing",
+    "vitest-package-exports": "catalog:testing",
+    "yaml": "catalog:testing"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
+  }
+}
