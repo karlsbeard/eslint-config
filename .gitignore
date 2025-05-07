@@ -9,5 +9,3 @@ lib-cov
 logs
 node_modules
 temp
-
-src/typegen.d.ts
