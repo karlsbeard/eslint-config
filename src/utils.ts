@@ -1,6 +1,6 @@
 import { isPackageExists } from 'local-pkg'
 import type { Awaitable, TypedFlatConfigItem } from './types'
-import { fileURLToPath } from 'url'
+import { fileURLToPath } from 'node:url'
 
 const scopeUrl = fileURLToPath(new URL('.', import.meta.url))
 
@@ -53,4 +53,26 @@ export async function combine(...configs: Awaitable<TypedFlatConfigItem | TypedF
 
 export function isPackageInScope(name: string): boolean {
   return isPackageExists(name, { paths: [scopeUrl] })
+}
+
+export function isInEditorEnv(): boolean {
+  if (process.env.CI)
+    return false
+  if (isInGitHooksOrLintStaged())
+    return false
+  return !!(false
+    || process.env.VSCODE_PID
+    || process.env.VSCODE_CWD
+    || process.env.JETBRAINS_IDE
+    || process.env.VIM
+    || process.env.NVIM
+  )
+}
+
+export function isInGitHooksOrLintStaged(): boolean {
+  return !!(false
+    || process.env.GIT_PARAMS
+    || process.env.VSCODE_GIT_COMMAND
+    || process.env.npm_lifecycle_script?.startsWith('lint-staged')
+  )
 }

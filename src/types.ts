@@ -3,6 +3,7 @@ import type { ParserOptions } from '@typescript-eslint/parser'
 import type { Linter } from 'eslint'
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore'
 import type { VendoredPrettierOptions } from './vender/prettier-types'
+import type { Options as VueBlockOptions } from 'eslint-processor-vue-blocks'
 
 export type Awaitable<T> = T | Promise<T>
 
@@ -16,6 +17,15 @@ export interface OptionsComponentExts {
 
 export interface OptionsStylistic {
   stylistic?: boolean | StylisticConfig
+}
+
+export interface OptionsUnicorn extends OptionsOverrides {
+  /**
+   * Include all rules recommended by `eslint-plugin-unicorn`, instead of only ones picked by Anthony.
+   *
+   * @default false
+   */
+  allRecommended?: boolean
 }
 
 export interface OptionsFiles {
@@ -159,7 +169,7 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
    */
   lessOpinionated?: boolean
 
-  vue?: boolean
+  vue?: boolean | OptionsVue
 
   typescript?: boolean | OptionsTypescript
 
@@ -199,6 +209,13 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
   isInEditor?: boolean
 
   /**
+   * Options for eslint-plugin-unicorn.
+   *
+   * @default true
+   */
+  unicorn?: boolean | OptionsUnicorn
+
+  /**
    * Provide overrides for rules for each integration.
    *
    * @deprecated use `overrides` option in each integration key instead
@@ -219,4 +236,33 @@ export type TypedFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord>, 'plugi
    * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
    */
   plugins?: Record<string, any>
+}
+
+export interface OptionsVue extends OptionsOverrides {
+  /**
+   * Create virtual files for Vue SFC blocks to enable linting.
+   *
+   * @see https://github.com/antfu/eslint-processor-vue-blocks
+   * @default true
+   */
+  sfcBlocks?: boolean | VueBlockOptions
+
+  /**
+   * Vue version. Apply different rules set from `eslint-plugin-vue`.
+   *
+   * @default 3
+   */
+  vueVersion?: 2 | 3
+
+  /**
+   * Vue accessibility plugin. Help check a11y issue in `.vue` files upon enabled
+   *
+   * @see https://vue-a11y.github.io/eslint-plugin-vuejs-accessibility/
+   * @default false
+   */
+  a11y?: boolean
+}
+
+export interface OptionsHasTypeScript {
+  typescript?: boolean
 }
