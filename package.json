@@ -71,6 +71,7 @@
   "devDependencies": {
     "@antfu/ni": "catalog:cli",
     "@antfu/utils": "catalog:inlined",
+    "@karlsbeard/eslint-config": "0.0.1-beta.3",
     "@prettier/plugin-xml": "catalog:peer",
     "@release-it/conventional-changelog": "^10.0.1",
     "@types/node": "catalog:types",
