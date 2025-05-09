@@ -10,9 +10,9 @@ export async function typescript(options: OptionsFiles & OptionsComponentExts & 
     type = 'app',
   } = options
 
-  const files = options.files ?? [GLOB_TS, GLOB_TSX, ...componentExts.map(ext => `**/*${ext}`)]
+   const files = options.files ?? [GLOB_TS, GLOB_TSX, ...componentExts.map(ext => `**/*${ext}`)]
 
-  const [
+        const [
     pluginTs,
     parserTs,
   ] = await Promise.all([

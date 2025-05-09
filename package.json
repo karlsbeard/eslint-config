@@ -62,21 +62,20 @@
     "@typescript-eslint/parser": "catalog:prod",
     "eslint-config-flat-gitignore": "catalog:prod",
     "eslint-flat-config-utils": "catalog:prod",
+    "eslint-merge-processors": "catalog:prod",
     "eslint-plugin-antfu": "catalog:prod",
     "eslint-plugin-import-x": "catalog:prod",
+    "eslint-plugin-unicorn": "catalog:prod",
     "eslint-plugin-unused-imports": "catalog:prod",
+    "eslint-plugin-vue": "catalog:prod",
+    "eslint-processor-vue-blocks": "catalog:prod",
     "globals": "catalog:prod",
     "local-pkg": "catalog:prod",
-    "eslint-plugin-unicorn": "catalog:prod",
-    "eslint-processor-vue-blocks": "catalog:prod",
-    "eslint-merge-processors": "catalog:prod",
-    "eslint-plugin-vue": "catalog:prod",
     "vue-eslint-parser": "catalog:prod"
   },
   "devDependencies": {
     "@antfu/ni": "catalog:cli",
     "@antfu/utils": "catalog:inlined",
-    "@karlsbeard/eslint-config": "0.0.1-beta.3",
     "@prettier/plugin-xml": "catalog:peer",
     "@release-it/conventional-changelog": "^10.0.1",
     "@types/node": "catalog:types",
@@ -95,8 +94,9 @@
     "vite": "catalog:cli",
     "vitest": "catalog:testing",
     "vitest-package-exports": "catalog:testing",
+    "vue": "catalog:peer",
     "yaml": "catalog:testing",
-    "vue": "catalog:peer"
+    "jiti": "catalog:dev"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"

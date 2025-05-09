@@ -1,10 +1,17 @@
 packages:
   - fixtures/*
 
+overrides:
+  '@eslint-community/eslint-utils': ^4.7.0
+  '@typescript-eslint/utils': ^8.32.0
+  eslint: ^9.26.0
+  tsx: ^4.19.4
+
 catalogs:
   dev:
     "eslint-typegen": "^2.1.0"
     "pnpm-workspace-yaml": "^0.3.1"
+    "jiti": "^2.4.2"
   cli:
     '@antfu/ni': ^24.1.0
     bumpp: ^10.1.0
@@ -49,3 +56,5 @@ catalogs:
 onlyBuiltDependencies:
   - esbuild
   - simple-git-hooks
+  - unrs-resolver
+
