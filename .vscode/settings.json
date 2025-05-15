@@ -9,7 +9,7 @@
     "source.organizeImports": "never"
   },
 
-  "eslint.runtime": "node",
+  "eslint.runtime": "/Users/chengkai48/.nvm/versions/node/v20.18.1/bin/node",
 
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [

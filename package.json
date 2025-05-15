@@ -35,7 +35,7 @@
     "dev": "unbuild --stub",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "gen": "tsx scripts/typegen.ts && tsx scripts/versiongen.ts",
+    "gen": "tsx scripts/typegen.ts",
     "prepublishOnly": "nr build",
     "start": "tsx src/index.ts",
     "test": "vitest",
@@ -83,6 +83,7 @@
     "eslint": "catalog:cli",
     "eslint-plugin-format": "catalog:peer",
     "eslint-typegen": "catalog:dev",
+    "jiti": "catalog:dev",
     "lint-staged": "catalog:cli",
     "pnpm-workspace-yaml": "catalog:dev",
     "release-it": "^18.1.2",
@@ -95,8 +96,7 @@
     "vitest": "catalog:testing",
     "vitest-package-exports": "catalog:testing",
     "vue": "catalog:peer",
-    "yaml": "catalog:testing",
-    "jiti": "catalog:dev"
+    "yaml": "catalog:testing"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"

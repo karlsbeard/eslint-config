@@ -56,12 +56,13 @@ export function karlsbeard(options: OptionsConfig & Omit<TypedFlatConfigItem, 'f
       // eslint-disable-next-line no-console
       console.log('[@karlsbeard/eslint-config] Detected running in editor, some rules are disabled.')
   }
-
+  /** false时，禁用所有stylistic规则 */
   const stylisticOptions = options.stylistic === false
     ? false
     : typeof options.stylistic === 'object'
       ? options.stylistic
       : {}
+
   const configs: Awaitable<TypedFlatConfigItem[]>[] = []
 
   if (enableGitignore) {
