@@ -1,7 +1,7 @@
 {
   "name": "@karlsbeard/eslint-config",
   "type": "module",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1",
   "private": false,
   "packageManager": "pnpm@10.6.2",
   "description": "karlsbeard's ESLint config",
@@ -35,7 +35,7 @@
     "dev": "unbuild --stub",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "gen": "tsx scripts/typegen.ts && tsx scripts/versiongen.ts",
+    "gen": "tsx scripts/typegen.ts",
     "prepublishOnly": "nr build",
     "start": "tsx src/index.ts",
     "test": "vitest",
@@ -62,11 +62,16 @@
     "@typescript-eslint/parser": "catalog:prod",
     "eslint-config-flat-gitignore": "catalog:prod",
     "eslint-flat-config-utils": "catalog:prod",
+    "eslint-merge-processors": "catalog:prod",
     "eslint-plugin-antfu": "catalog:prod",
     "eslint-plugin-import-x": "catalog:prod",
+    "eslint-plugin-unicorn": "catalog:prod",
     "eslint-plugin-unused-imports": "catalog:prod",
+    "eslint-plugin-vue": "catalog:prod",
+    "eslint-processor-vue-blocks": "catalog:prod",
     "globals": "catalog:prod",
-    "local-pkg": "catalog:prod"
+    "local-pkg": "catalog:prod",
+    "vue-eslint-parser": "catalog:prod"
   },
   "devDependencies": {
     "@antfu/ni": "catalog:cli",
@@ -78,6 +83,7 @@
     "eslint": "catalog:cli",
     "eslint-plugin-format": "catalog:peer",
     "eslint-typegen": "catalog:dev",
+    "jiti": "catalog:dev",
     "lint-staged": "catalog:cli",
     "pnpm-workspace-yaml": "catalog:dev",
     "release-it": "^18.1.2",
@@ -89,6 +95,7 @@
     "vite": "catalog:cli",
     "vitest": "catalog:testing",
     "vitest-package-exports": "catalog:testing",
+    "vue": "catalog:peer",
     "yaml": "catalog:testing"
   },
   "simple-git-hooks": {

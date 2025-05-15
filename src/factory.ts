@@ -4,8 +4,8 @@ import type { ConfigNames } from './typegen'
 import type { OptionsConfig, TypedFlatConfigItem } from './types'
 import { FlatConfigComposer } from 'eslint-flat-config-utils'
 import { isPackageExists } from 'local-pkg'
-import { ignores, imports, javascript, typescript, stylistic, disables } from './configs'
-import { interopDefault } from './utils'
+import { ignores, imports, javascript, typescript, stylistic, disables, unicorn, vue } from './configs'
+import { interopDefault, isInEditorEnv } from './utils'
 import { formatters } from './configs/formatters'
 
 const VuePackages = [
@@ -14,6 +14,16 @@ const VuePackages = [
   'vitepress',
   '@slidev/cli',
 ]
+
+const flatConfigProps = [
+  'name',
+  'languageOptions',
+  'linterOptions',
+  'processor',
+  'plugins',
+  'rules',
+  'settings',
+] satisfies (keyof TypedFlatConfigItem)[]
 
 export const defaultPluginRenaming = {
   '@eslint-react': 'react',
@@ -36,13 +46,23 @@ export function karlsbeard(options: OptionsConfig & Omit<TypedFlatConfigItem, 'f
     gitignore: enableGitignore = true,
     typescript: enableTypeScript = isPackageExists('typescript'),
     vue: enableVue = VuePackages.some(i => isPackageExists(i)),
+    unicorn: enableUnicorn = true,
   } = options
 
+  let isInEditor = options.isInEditor
+  if (isInEditor == null) {
+    isInEditor = isInEditorEnv()
+    if (isInEditor)
+      // eslint-disable-next-line no-console
+      console.log('[@karlsbeard/eslint-config] Detected running in editor, some rules are disabled.')
+  }
+  /** false时，禁用所有stylistic规则 */
   const stylisticOptions = options.stylistic === false
     ? false
     : typeof options.stylistic === 'object'
       ? options.stylistic
       : {}
+
   const configs: Awaitable<TypedFlatConfigItem[]>[] = []
 
   if (enableGitignore) {
@@ -66,13 +86,17 @@ export function karlsbeard(options: OptionsConfig & Omit<TypedFlatConfigItem, 'f
   configs.push(
     ignores(options.ignores),
     javascript({
-      isInEditor: false,
+      isInEditor,
       overrides: getOverrides(options, 'javascript'),
     }),
     imports({
       stylistic: stylisticOptions,
     }),
   )
+
+  if (enableUnicorn) {
+    configs.push(unicorn(enableUnicorn === true ? {} : enableUnicorn))
+  }
 
   if (enableVue) {
     componentExts.push('vue')
@@ -95,11 +119,30 @@ export function karlsbeard(options: OptionsConfig & Omit<TypedFlatConfigItem, 'f
     }))
   }
 
+  if (enableVue) {
+    configs.push(vue({
+      ...resolveSubOptions(options, 'vue'),
+      overrides: getOverrides(options, 'vue'),
+      stylistic: stylisticOptions,
+      typescript: !!enableTypeScript,
+    }))
+  }
+
   if (options.formatters) {
     configs.push(formatters(options.formatters, typeof stylisticOptions === 'boolean' ? {} : stylisticOptions))
   }
 
   configs.push(disables())
+
+  // User can optionally pass a flat config item to the first argument
+  // We pick the known keys as ESLint would do schema validation
+  const fusedConfig = flatConfigProps.reduce((acc, key) => {
+    if (key in options)
+      acc[key] = options[key] as any
+    return acc
+  }, {} as TypedFlatConfigItem)
+  if (Object.keys(fusedConfig).length)
+    configs.push([fusedConfig])
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>()
   composer = composer.append(
@@ -109,6 +152,17 @@ export function karlsbeard(options: OptionsConfig & Omit<TypedFlatConfigItem, 'f
 
   if (autoRenamePlugins) {
     composer = composer.renamePlugins(defaultPluginRenaming)
+  }
+
+  if (isInEditor) {
+    composer = composer
+      .disableRulesFix([
+        'unused-imports/no-unused-imports',
+        'test/no-only-tests',
+        'prefer-const',
+      ], {
+        builtinRules: () => import(['eslint', 'use-at-your-own-risk'].join('/')).then(r => r.builtinRules),
+      })
   }
 
   return composer

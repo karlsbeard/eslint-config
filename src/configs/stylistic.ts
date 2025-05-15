@@ -8,7 +8,6 @@ export const StylisticConfigDefaults: StylisticConfig = {
   jsx: true,
   quotes: 'single',
   semi: false,
-  commaDangle: 'always-multiline',
 }
 
 export interface StylisticOptions extends StylisticConfig, OptionsOverrides {

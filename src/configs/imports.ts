@@ -3,9 +3,7 @@ import type { OptionsStylistic, TypedFlatConfigItem } from '../types'
 import { pluginAntfu, pluginImport } from '../plugins'
 
 export async function imports(options: OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
-  const {
-    stylistic = true,
-  } = options
+  const { stylistic = true } = options
 
   return [
     {

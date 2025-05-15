@@ -7,6 +7,7 @@ import { interopDefault, isPackageInScope, parserPlain } from '../utils'
 import { StylisticConfigDefaults } from './stylistic'
 
 function mergePrettierOptions(
+
   options: VendoredPrettierOptions,
   overrides: VendoredPrettierRuleOptions = {},
 ): VendoredPrettierRuleOptions {
